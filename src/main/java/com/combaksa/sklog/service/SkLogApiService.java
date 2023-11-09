@@ -2,18 +2,56 @@ package com.combaksa.sklog.service;
 
 import com.combaksa.sklog.dto.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 public class SkLogApiService {
+    private final String fastApiBaseUrl = "http://localhost:8080";
 
-    public ContentResponseDto createTable(ContentRequestDto requestDto){
-        //ai서버 파이썬에 보내(requsetDto.getContent())
+    private final RestTemplate restTemplate; //외부 API 호출 담당
+    private final ObjectMapper objectMapper; //객체 -> json 변경 담당
 
-        String content = requestDto.getContent();
-        content += "이렇게 표로 만듬.";
+    public String requestToFastApi(String requestBody, String endpoint, HttpMethod httpMethod){
+        // http request 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
 
-        return new ContentResponseDto(content);
+        // http request 헤더와 바디를 합쳐서 httpEntity 생성
+        HttpEntity<String> httpEntity = new HttpEntity<>(requestBody, headers);
+
+        // http request url 설정
+        String apiUrl = fastApiBaseUrl + endpoint;
+
+        // http request 전송
+        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, httpMethod, httpEntity, String.class);
+
+        // http response body 내용 추출
+        String responseBody = responseEntity.getBody();
+
+        return responseBody;
+    }
+
+    public ContentResponseDto createTable(ContentRequestDto requestDto) {
+        try {
+            String requestBody = objectMapper.writeValueAsString(requestDto);
+            String content = requestToFastApi(requestBody, "/api/list", HttpMethod.POST);
+
+            return new ContentResponseDto(content);
+
+        }catch (JsonProcessingException e) {
+                // 객체 -> json 변경시 예외처리
+                e.printStackTrace();
+                return null;
+            }
     }
 
     public ContentResponseDto createList(ContentRequestDto requestDto) {
