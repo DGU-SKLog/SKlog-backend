@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 public class SkLogApiService {
-    private final String fastApiBaseUrl = "http://localhost:8080";
+    private final String fastApiBaseUrl = "http://localhost:8000";
 
     private final RestTemplate restTemplate; //외부 API 호출 담당
     private final ObjectMapper objectMapper; //객체 -> json 변경 담당
@@ -40,12 +40,20 @@ public class SkLogApiService {
         return responseBody;
     }
 
-    public ContentResponseDto createTable(ContentRequestDto requestDto) {
+    /* 표 생성 함수 */
+    public UserResponseDto createTable(UserRequestDto requestDto) {
         try {
-            String requestBody = objectMapper.writeValueAsString(requestDto);
-            String content = requestToFastApi(requestBody, "/api/list", HttpMethod.POST);
+            // request 내용 작성
+            requestDto.setRequest("아래 내용 마크다운의 표 형식으로 변경해줘.");
 
-            return new ContentResponseDto(content);
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
+
+            // FastAPI에게 요청 후 응답 내용 저장
+            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 응답 내용
+            return new UserResponseDto(content);
 
         }catch (JsonProcessingException e) {
                 // 객체 -> json 변경시 예외처리
@@ -54,44 +62,47 @@ public class SkLogApiService {
             }
     }
 
-    public ContentResponseDto createList(ContentRequestDto requestDto) {
+    public UserResponseDto createList(UserRequestDto requestDto) {
         //ai서버 파이썬에 보내(requsetDto.getContent())
 
         String content = requestDto.getContent();
         content += "이렇게 리스트로 만듬.";
 
-        return new ContentResponseDto(content);
+        return new UserResponseDto(content);
     }
 
-    public ContentResponseDto createSummary(ContentRequestDto requestDto){
+    public UserResponseDto createSummary(UserRequestDto requestDto){
         String content = requestDto.getContent();
         content += "이렇게 요약글을 만듦";
 
-        return new ContentResponseDto(content);
+        return new UserResponseDto(content);
     }
 
-    public ContentResponseDto createExpansion(ContentRequestDto requestDto){
+    public UserResponseDto createExpansion(UserRequestDto requestDto){
         String content = requestDto.getContent();
         content += "이렇게 확장글을 만듦";
 
-        return new ContentResponseDto(content);
+        return new UserResponseDto(content);
     }
 
-    public ContentResponseDto createEdit(ContentRequestDto requestDto){
+    public UserResponseDto createEdit(UserRequestDto requestDto){
         String content = requestDto.getContent();
         content += "이렇게 수정글을 만듦";
 
-        return new ContentResponseDto(content);
+        return new UserResponseDto(content);
     }
 
-    public ContentResponseDto createUserResponse(UserRequestDto userRequestDto){
+    public UserResponseDto createUserResponse(UserRequestDto userRequestDto){
         String request = userRequestDto.getRequest();
         String content = userRequestDto.getContent();
+
+        System.out.println(request);
+        System.out.println(content);
 
         //sdfsdfsdfsd(requset, content);
         String response = "이렇게 응답이 생김";
 
-        return new ContentResponseDto(response);
+        return new UserResponseDto(response);
     }
 
     public ContentResponseDto createAnswer(UserRequestDto userRequestDto){
