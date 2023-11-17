@@ -71,6 +71,13 @@ public class SkLogApiController {
                 .body(responseDto);
     }
 
+    @PostMapping("/api/apply")
+    public ResponseEntity<Void> applyResponse(@RequestBody UserResponseDto responseDto){
+
+        return ResponseEntity.ok()
+                .build();
+    }
+
 
 
 }
