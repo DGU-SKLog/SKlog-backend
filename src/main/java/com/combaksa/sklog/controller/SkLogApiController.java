@@ -16,48 +16,48 @@ public class SkLogApiController {
     private final SkLogApiService skLogApiService;
 
     @PostMapping("/api/table")
-    public ResponseEntity<ContentResponseDto> createTable(@RequestBody ContentRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createTable(requestDto);
+    public ResponseEntity<UserResponseDto> createTable(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = skLogApiService.createTable(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
     }
 
     @PostMapping("/api/list")
-    public ResponseEntity<ContentResponseDto> createList(@RequestBody ContentRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createList(requestDto);
+    public ResponseEntity<UserResponseDto> createList(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = skLogApiService.createList(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
     }
 
     @PostMapping("/api/summary")
-    public ResponseEntity<ContentResponseDto> createSummary(@RequestBody ContentRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createSummary(requestDto);
+    public ResponseEntity<UserResponseDto> createSummary(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = skLogApiService.createSummary(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
     }
 
     @PostMapping("/api/expansion")
-    public ResponseEntity<ContentResponseDto> createExpansion(@RequestBody ContentRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createExpansion(requestDto);
+    public ResponseEntity<UserResponseDto> createExpansion(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = skLogApiService.createExpansion(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
     }
 
     @PostMapping("/api/edit")
-    public ResponseEntity<ContentResponseDto> createEdit(@RequestBody ContentRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createExpansion(requestDto);
+    public ResponseEntity<UserResponseDto> createEdit(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = skLogApiService.createExpansion(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
     }
 
     @PostMapping("/api/request")
-    public ResponseEntity<ContentResponseDto> createUserResponse(@RequestBody UserRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createUserResponse(requestDto);
+    public ResponseEntity<UserResponseDto> createUserResponse(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = skLogApiService.createUserResponse(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
