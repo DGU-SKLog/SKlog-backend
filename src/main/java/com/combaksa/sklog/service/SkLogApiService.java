@@ -20,7 +20,7 @@ public class SkLogApiService {
     private final RestTemplate restTemplate; //외부 API 호출 담당
     private final ObjectMapper objectMapper; //객체 -> json 변경 담당
 
-    public String requestToFastApi(String requestBody, String endpoint, HttpMethod httpMethod){
+    public UserResponseDto requestToFastApi(String requestBody, String endpoint, HttpMethod httpMethod){
         // http request 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -32,10 +32,10 @@ public class SkLogApiService {
         String apiUrl = fastApiBaseUrl + endpoint;
 
         // http request 전송
-        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, httpMethod, httpEntity, String.class);
+        ResponseEntity<UserResponseDto> responseEntity = restTemplate.exchange(apiUrl, httpMethod, httpEntity, UserResponseDto.class);
 
         // http response body 내용 추출
-        String responseBody = responseEntity.getBody();
+        UserResponseDto responseBody = responseEntity.getBody();
 
         return responseBody;
     }
@@ -50,10 +50,10 @@ public class SkLogApiService {
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+            UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
             // 응답 내용
-            return new UserResponseDto(content);
+            return responseDto;
 
         }catch (JsonProcessingException e) {
             // 객체 -> json 변경시 예외처리
@@ -71,10 +71,11 @@ public class SkLogApiService {
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+            UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
+            System.out.println(responseDto.getContent());
             // 응답 내용
-            return new UserResponseDto(content);
+            return responseDto;
 
         }catch (JsonProcessingException e) {
             // 객체 -> json 변경시 예외처리
@@ -92,10 +93,10 @@ public class SkLogApiService {
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+            UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
             // 응답 내용
-            return new UserResponseDto(content);
+            return responseDto;
 
         }catch (JsonProcessingException e) {
             // 객체 -> json 변경시 예외처리
@@ -113,10 +114,10 @@ public class SkLogApiService {
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+            UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
             // 응답 내용
-            return new UserResponseDto(content);
+            return responseDto;
 
         }catch (JsonProcessingException e) {
             // 객체 -> json 변경시 예외처리
@@ -135,10 +136,10 @@ public class SkLogApiService {
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+            UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
             // 응답 내용
-            return new UserResponseDto(content);
+            return responseDto;
 
         }catch (JsonProcessingException e) {
             // 객체 -> json 변경시 예외처리
@@ -153,10 +154,10 @@ public class SkLogApiService {
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+            UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
             // 응답 내용
-            return new UserResponseDto(content);
+            return responseDto;
 
         }catch (JsonProcessingException e) {
             // 객체 -> json 변경시 예외처리
