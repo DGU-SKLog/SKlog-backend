@@ -56,53 +56,113 @@ public class SkLogApiService {
             return new UserResponseDto(content);
 
         }catch (JsonProcessingException e) {
-                // 객체 -> json 변경시 예외처리
-                e.printStackTrace();
-                return null;
-            }
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public UserResponseDto createList(UserRequestDto requestDto) {
-        //ai서버 파이썬에 보내(requsetDto.getContent())
+        try {
+            // request 내용 작성
+            requestDto.setRequest("아래 내용 마크다운 리스트 형식으로 변경해줘.");
 
-        String content = requestDto.getContent();
-        content += "이렇게 리스트로 만듬.";
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
 
-        return new UserResponseDto(content);
+            // FastAPI에게 요청 후 응답 내용 저장
+            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 응답 내용
+            return new UserResponseDto(content);
+
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public UserResponseDto createSummary(UserRequestDto requestDto){
-        String content = requestDto.getContent();
-        content += "이렇게 요약글을 만듦";
+        try {
+            // request 내용 작성
+            requestDto.setRequest("아래 내용 요약해줘.");
 
-        return new UserResponseDto(content);
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
+
+            // FastAPI에게 요청 후 응답 내용 저장
+            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 응답 내용
+            return new UserResponseDto(content);
+
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public UserResponseDto createExpansion(UserRequestDto requestDto){
-        String content = requestDto.getContent();
-        content += "이렇게 확장글을 만듦";
+        try {
+            // request 내용 작성
+            requestDto.setRequest("아래 내용 더 자세히 작성해줘.");
 
-        return new UserResponseDto(content);
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
+
+            // FastAPI에게 요청 후 응답 내용 저장
+            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 응답 내용
+            return new UserResponseDto(content);
+
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public UserResponseDto createEdit(UserRequestDto requestDto){
-        String content = requestDto.getContent();
-        content += "이렇게 수정글을 만듦";
+        try {
+            // request 내용 작성
+            requestDto.setRequest("아래 작성한 내용중에 내가 잘못 작성하거나 이해를 잘못한 부분이 있다면 수정해줘." +
+                    "수정한 내용은 마크다운 형식으로 빨간색으로 표시해줘.");
 
-        return new UserResponseDto(content);
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
+
+            // FastAPI에게 요청 후 응답 내용 저장
+            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 응답 내용
+            return new UserResponseDto(content);
+
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public UserResponseDto createUserResponse(UserRequestDto userRequestDto){
-        String request = userRequestDto.getRequest();
-        String content = userRequestDto.getContent();
+    public UserResponseDto createUserResponse(UserRequestDto requestDto){
+        try {
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
 
-        System.out.println(request);
-        System.out.println(content);
+            // FastAPI에게 요청 후 응답 내용 저장
+            String content = requestToFastApi(requestBody, "/query", HttpMethod.POST);
 
-        //sdfsdfsdfsd(requset, content);
-        String response = "이렇게 응답이 생김";
+            // 응답 내용
+            return new UserResponseDto(content);
 
-        return new UserResponseDto(response);
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public ContentResponseDto createAnswer(UserRequestDto userRequestDto){
