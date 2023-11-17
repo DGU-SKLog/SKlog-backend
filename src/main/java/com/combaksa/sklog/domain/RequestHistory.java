@@ -1,10 +1,7 @@
 package com.combaksa.sklog.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -24,4 +21,11 @@ public class RequestHistory {
 
     @Column(name = "aiContent", nullable = true)
     private String aiContent;
+
+    @Builder
+    public RequestHistory(String request, String userContent, String aiContent){
+        this.request = request;
+        this.userContent = userContent;
+        this.aiContent = aiContent;
+    }
 }

@@ -1,7 +1,9 @@
 package com.combaksa.sklog.service;
 
+import com.combaksa.sklog.domain.RequestHistory;
 import com.combaksa.sklog.dto.*;
 
+import com.combaksa.sklog.repository.RequestHistoryRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SkLogApiService {
@@ -19,8 +24,9 @@ public class SkLogApiService {
 
     private final RestTemplate restTemplate; //외부 API 호출 담당
     private final ObjectMapper objectMapper; //객체 -> json 변경 담당
+    private final RequestHistoryRepository historyRepository;
 
-    public UserResponseDto requestToFastApi(String requestBody, String endpoint, HttpMethod httpMethod){
+    private UserResponseDto requestToFastApi(String requestBody, String endpoint, HttpMethod httpMethod){
         // http request 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -46,11 +52,31 @@ public class SkLogApiService {
             // request 내용 작성
             requestDto.setRequest("아래 내용 마크다운의 표 형식으로 변경해줘.");
 
+            // 동일한 질문의 이전 기록을 확인
+            List<RequestHistory> historyList = historyRepository.findAllByRequest(requestDto.getContent());
+
+            List<String> userContentList = new ArrayList<>();
+            List<String> aiContentList = new ArrayList<>();
+
+            for (int i=0; i<2 && i < historyList.size(); i++){
+                RequestHistory history = historyList.get(i);
+                userContentList.add(history.getUserContent());
+                aiContentList.add(history.getAiContent());
+            }
+
+            requestDto.setUserContentList(userContentList);
+            requestDto.setAiContentList(aiContentList);
+
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
             UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 요청 내용 DB에 저장
+            RequestHistory newHistory = requestDto.toEntity();
+            newHistory.setAiContent(responseDto.getContent());
+            historyRepository.save(newHistory);
 
             // 응답 내용
             return responseDto;
@@ -150,11 +176,32 @@ public class SkLogApiService {
 
     public UserResponseDto createUserResponse(UserRequestDto requestDto){
         try {
+            // 동일한 질문의 이전 기록을 확인
+            List<RequestHistory> historyList = historyRepository.findAllByRequest(requestDto.getRequest());
+
+            List<String> userContentList = new ArrayList<>();
+            List<String> aiContentList = new ArrayList<>();
+
+            for (int i=0; i<2 && i < historyList.size(); i++){
+                RequestHistory history = historyList.get(i);
+                userContentList.add(history.getUserContent());
+                aiContentList.add(history.getAiContent());
+            }
+
+            requestDto.setUserContentList(userContentList);
+            requestDto.setAiContentList(aiContentList);
+
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
+            System.out.println(requestBody);
 
             // FastAPI에게 요청 후 응답 내용 저장
             UserResponseDto responseDto = requestToFastApi(requestBody, "/query", HttpMethod.POST);
+
+            // 요청 내용 DB에 저장
+            RequestHistory newHistory = requestDto.toEntity();
+            newHistory.setAiContent(responseDto.getContent());
+            historyRepository.save(newHistory);
 
             // 응답 내용
             return responseDto;
