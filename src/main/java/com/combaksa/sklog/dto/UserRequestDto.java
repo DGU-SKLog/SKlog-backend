@@ -11,8 +11,8 @@ import java.util.List;
 public class UserRequestDto {
     private String request;
     private String content;
-    private List<String> userContentList;
-    private List<String> aiContentList;
+    private List<String> userContentExamples;
+    private List<String> aiContentExamples;
 
     public RequestHistory toEntity(){
         return RequestHistory.builder()
