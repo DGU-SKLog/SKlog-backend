@@ -64,8 +64,8 @@ public class SkLogApiService {
                 aiContentList.add(history.getAiContent());
             }
 
-            requestDto.setUserContentList(userContentList);
-            requestDto.setAiContentList(aiContentList);
+            requestDto.setUserContentExamples(userContentList);
+            requestDto.setAiContentExamples(aiContentList);
 
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
@@ -188,8 +188,8 @@ public class SkLogApiService {
                 aiContentList.add(history.getAiContent());
             }
 
-            requestDto.setUserContentList(userContentList);
-            requestDto.setAiContentList(aiContentList);
+            requestDto.setUserContentExamples(userContentList);
+            requestDto.setAiContentExamples(aiContentList);
 
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
