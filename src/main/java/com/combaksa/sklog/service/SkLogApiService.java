@@ -212,13 +212,23 @@ public class SkLogApiService {
         }
     }
 
-    public ContentResponseDto createAnswer(ContentRequestDto contentRequestDto){
-        String question = contentRequestDto.getQuestion();
+    public ContentResponseDto createAnswer(ContentRequestDto requestDto){
+        try {
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
 
-        //sdfsdfsdfsd(requset, content);
-        String response = question + " 이렇게 답변이 생김";
+            // FastAPI에게 요청 후 응답 내용 저장
+            ContentResponseDto responseDto = requestToFastApi(requestBody, "/ai/chat-bot",
+                    HttpMethod.POST, ContentResponseDto.class);
 
-        return new ContentResponseDto(response);
+            // 응답 내용
+            return responseDto;
+
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
