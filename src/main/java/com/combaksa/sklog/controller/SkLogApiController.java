@@ -49,7 +49,7 @@ public class SkLogApiController {
 
     @PostMapping("/api/edit")
     public ResponseEntity<UserResponseDto> createEdit(@RequestBody UserRequestDto requestDto){
-        UserResponseDto responseDto = skLogApiService.createExpansion(requestDto);
+        UserResponseDto responseDto = skLogApiService.createEdit(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
@@ -64,7 +64,7 @@ public class SkLogApiController {
     }
 
     @PostMapping("/api/question")
-    public ResponseEntity<ContentResponseDto> createAnswer(@RequestBody UserRequestDto requestDto){
+    public ResponseEntity<ContentResponseDto> createAnswer(@RequestBody ContentRequestDto requestDto){
         ContentResponseDto responseDto = skLogApiService.createAnswer(requestDto);
 
         return ResponseEntity.ok()

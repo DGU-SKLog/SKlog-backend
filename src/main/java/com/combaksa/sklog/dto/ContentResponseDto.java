@@ -6,5 +6,5 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 public class ContentResponseDto {
-    private String Content;
+    private String answer;
 }

@@ -213,12 +213,11 @@ public class SkLogApiService {
         }
     }
 
-    public ContentResponseDto createAnswer(UserRequestDto userRequestDto){
-        String request = userRequestDto.getRequest();
-        String content = userRequestDto.getContent();
+    public ContentResponseDto createAnswer(ContentRequestDto contentRequestDto){
+        String question = contentRequestDto.getQuestion();
 
         //sdfsdfsdfsd(requset, content);
-        String response = "이렇게 답변이 생김";
+        String response = question + " 이렇게 답변이 생김";
 
         return new ContentResponseDto(response);
     }
