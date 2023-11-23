@@ -71,6 +71,14 @@ public class SkLogApiController {
                 .body(responseDto);
     }
 
+    @PostMapping("/api/metadata")
+    public ResponseEntity<MetaDataResponseDto> createMetaData(@RequestBody MetaDataRequestDto requestDto){
+        MetaDataResponseDto responseDto = skLogApiService.createMetaData(requestDto);
+
+        return ResponseEntity.ok()
+                .body(responseDto);
+    }
+
     @PostMapping("/api/apply")
     public ResponseEntity<Void> applyResponse(@RequestBody UserResponseDto responseDto){
 
