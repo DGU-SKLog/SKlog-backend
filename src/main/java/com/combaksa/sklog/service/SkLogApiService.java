@@ -212,14 +212,14 @@ public class SkLogApiService {
         }
     }
 
-    public ContentResponseDto createAnswer(ContentRequestDto requestDto){
+    public ChatBotAnswerDto createAnswer(ChatBotQuestionDto requestDto){
         try {
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
 
             // FastAPI에게 요청 후 응답 내용 저장
-            ContentResponseDto responseDto = requestToFastApi(requestBody, "/ai/chat-bot",
-                    HttpMethod.POST, ContentResponseDto.class);
+            ChatBotAnswerDto responseDto = requestToFastApi(requestBody, "/ai/chat-bot",
+                    HttpMethod.POST, ChatBotAnswerDto.class);
 
             // 응답 내용
             return responseDto;

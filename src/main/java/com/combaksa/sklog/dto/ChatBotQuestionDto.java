@@ -3,7 +3,7 @@ package com.combaksa.sklog.dto;
 import lombok.Getter;
 
 @Getter
-public class ContentRequestDto {
+public class ChatBotQuestionDto {
     private String question;
 }
 

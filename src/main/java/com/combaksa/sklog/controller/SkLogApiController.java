@@ -64,8 +64,8 @@ public class SkLogApiController {
     }
 
     @PostMapping("/api/question")
-    public ResponseEntity<ContentResponseDto> createAnswer(@RequestBody ContentRequestDto requestDto){
-        ContentResponseDto responseDto = skLogApiService.createAnswer(requestDto);
+    public ResponseEntity<ChatBotAnswerDto> createAnswer(@RequestBody ChatBotQuestionDto requestDto){
+        ChatBotAnswerDto responseDto = skLogApiService.createAnswer(requestDto);
 
         return ResponseEntity.ok()
                 .body(responseDto);
