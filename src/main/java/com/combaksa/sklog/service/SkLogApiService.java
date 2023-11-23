@@ -49,7 +49,7 @@ public class SkLogApiService {
     public UserResponseDto createTable(UserRequestDto requestDto) {
         try {
             // request 내용 작성
-            requestDto.setRequest("아래 내용 마크다운의 표 형식으로 변경해줘.");
+            requestDto.setRequest("Change the contents below to Markdown table format.");
 
             // 동일한 질문의 이전 기록을 확인
             List<RequestHistory> historyList = historyRepository.findAllByRequest(requestDto.getContent());
@@ -90,7 +90,7 @@ public class SkLogApiService {
     public UserResponseDto createList(UserRequestDto requestDto) {
         try {
             // request 내용 작성
-            requestDto.setRequest("아래 내용 마크다운 리스트 형식으로 변경해줘.");
+            requestDto.setRequest("Change the contents below to markdown list format.");
 
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
@@ -112,7 +112,7 @@ public class SkLogApiService {
     public UserResponseDto createSummary(UserRequestDto requestDto){
         try {
             // request 내용 작성
-            requestDto.setRequest("아래 내용 요약해줘.");
+            requestDto.setRequest("Summarize the contents below. ");
 
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
@@ -133,7 +133,7 @@ public class SkLogApiService {
     public UserResponseDto createExpansion(UserRequestDto requestDto){
         try {
             // request 내용 작성
-            requestDto.setRequest("아래 내용 더 자세히 작성해줘.");
+            requestDto.setRequest("Please fill out the information below in more detail.");
 
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
@@ -154,8 +154,8 @@ public class SkLogApiService {
     public UserResponseDto createEdit(UserRequestDto requestDto){
         try {
             // request 내용 작성
-            requestDto.setRequest("아래 작성한 내용중에 내가 잘못 작성하거나 이해를 잘못한 부분이 있다면 수정해줘." +
-                    "수정한 내용은 마크다운 형식으로 빨간색으로 표시해줘.");
+            requestDto.setRequest("If there is anything I wrote incorrectly or misunderstood in the content below, please correct it."
+                    + "Mark the modified content in red in Markdown format.");
 
             // request Body 내용 생성: DTO객체를 -> json으로 변경
             String requestBody = objectMapper.writeValueAsString(requestDto);
