@@ -79,6 +79,14 @@ public class SkLogApiController {
                 .body(responseDto);
     }
 
+    @PostMapping("/api/cohesion")
+    public ResponseEntity<CohesionResponseDto> createCohesion(@RequestBody CohesionRequestDto requestDto){
+        CohesionResponseDto responseDto = skLogApiService.createCohesion(requestDto);
+
+        return ResponseEntity.ok()
+                .body(responseDto);
+    }
+
     @PostMapping("/api/apply")
     public ResponseEntity<Void> applyResponse(@RequestBody UserResponseDto responseDto){
 

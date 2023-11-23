@@ -251,6 +251,26 @@ public class SkLogApiService {
 
     }
 
+    public CohesionResponseDto createCohesion(CohesionRequestDto requestDto){
+        try {
+            // request Body 내용 생성: DTO객체를 -> json으로 변경
+            String requestBody = objectMapper.writeValueAsString(requestDto);
+
+            // FastAPI에게 요청 후 응답 내용 저장
+            CohesionResponseDto responseDto = requestToFastApi(requestBody, "/ai/cohesion",
+                    HttpMethod.POST, CohesionResponseDto.class);
+
+            // 응답 내용
+            return responseDto;
+
+        }catch (JsonProcessingException e) {
+            // 객체 -> json 변경시 예외처리
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 
 }
 
