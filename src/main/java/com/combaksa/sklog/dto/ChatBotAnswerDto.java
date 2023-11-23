@@ -6,6 +6,6 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContentResponseDto {
+public class ChatBotAnswerDto {
     private String answer;
 }
