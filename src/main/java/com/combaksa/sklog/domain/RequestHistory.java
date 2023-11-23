@@ -13,13 +13,13 @@ public class RequestHistory {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "request", nullable = false)
+    @Column(name = "request", nullable = false, length = 1000)
     private String request;
 
-    @Column(name = "userContent", nullable = false)
+    @Column(name = "userContent", nullable = false, length = 5000)
     private String userContent;
 
-    @Column(name = "aiContent", nullable = true)
+    @Column(name = "aiContent", nullable = true, length = 5000)
     private String aiContent;
 
     @Builder
